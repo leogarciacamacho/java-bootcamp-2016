@@ -6,32 +6,32 @@ public class OracleBuilder implements DbBuilder {
 
 	@Override
 	public void buildHost() {
-		OracleSingleton.setHost("localhost");
+		OracleConnection.setHost("localhost");
 	}
 
 	@Override
 	public void buildPort() {
-		OracleSingleton.setPort("3306");
+		OracleConnection.setPort("3306");
 	}
 
 	@Override
 	public void buildName() {
-		OracleSingleton.setName("OracleDb");
+		OracleConnection.setName("OracleDb");
 	}
 
 	@Override
 	public void buildUser() {
-		OracleSingleton.setUser("root");
+		OracleConnection.setUser("root");
 	}
 
 	@Override
 	public void buildPass() {
-		OracleSingleton.setPass("root");
+		OracleConnection.setPass("root");
 	}
 
 	@Override
 	public Connection getConnection() {
-		return OracleSingleton.getInstance().getConnection();
+		return OracleConnection.getInstance().getConnection();
 	}
 	
 }

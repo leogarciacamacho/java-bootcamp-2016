@@ -1,11 +1,16 @@
 package abstractFactory;
 
-import java.sql.Connection;
+public class NoSQLFactory extends AbstractFactory {
 
-public class NoSQLFactory extends ConnectionFactory {
+	@Override
+	public AbstractSQL getSQL(String connectionType) {
+		return null;
+	}
 
-	public Connection getConnection(String connectionType) {
-		return null;											// no desarrollado
+	@Override
+	public AbstractNoSQL getNoSQL(String connectionType) {
+		// no desarrollado
+		return null;
 	}
 
 }

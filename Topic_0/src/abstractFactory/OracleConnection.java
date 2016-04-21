@@ -1,22 +1,22 @@
-package singleton;
+package abstractFactory;
 
 import java.sql.*;
 
-public class DbSingleton {
+public class OracleConnection extends AbstractSQL {
 	private final static String host = "localhost";
 	private final static String port = "3306";
-	private final static String name = "javaDb";
+	private final static String name = "OracleDb";
 	private final static String user = "root";
 	private final static String pass = "root";
 	private Connection connection = null;
-	private static DbSingleton instance = null;
+	private static OracleConnection instance = null;
 	
-	private DbSingleton() {
+	private OracleConnection() {
 	}
 	
-	public static DbSingleton getInstance() {
+	public static OracleConnection getInstance() {
 		if(instance ==null){
-			instance = new DbSingleton();
+			instance = new OracleConnection();
 		}
 		return instance;
 	}
@@ -24,7 +24,7 @@ public class DbSingleton {
 	public Connection getConnection() { 
        try {
 			if(connection == null || connection.isClosed()) {
-				StringBuilder url = new StringBuilder ("jdbc:mysql://" + host + ":" + port + "/" + name);
+				StringBuilder url = new StringBuilder("jdbc:oracle://" + host + ":" + port + "/" + name);
 				connection = DriverManager.getConnection(url.toString(), user, pass);
 			}
 		} catch (SQLException e) {

@@ -6,32 +6,32 @@ public class MySQLBuilder implements DbBuilder {
 
 	@Override
 	public void buildHost() {
-		MySQLSingleton.setHost("localhost");
+		MySQLConnection.setHost("localhost");
 	}
 
 	@Override
 	public void buildPort() {
-		MySQLSingleton.setPort("3306");
+		MySQLConnection.setPort("3306");
 	}
 
 	@Override
 	public void buildName() {
-		MySQLSingleton.setName("MySQLDb");
+		MySQLConnection.setName("MySQLDb");
 	}
 
 	@Override
 	public void buildUser() {
-		MySQLSingleton.setUser("root");
+		MySQLConnection.setUser("root");
 	}
 
 	@Override
 	public void buildPass() {
-		MySQLSingleton.setPass("root");
+		MySQLConnection.setPass("root");
 	}
 
 	@Override
 	public Connection getConnection() {
-		return MySQLSingleton.getInstance().getConnection();
+		return MySQLConnection.getInstance().getConnection();
 	}
 
 }

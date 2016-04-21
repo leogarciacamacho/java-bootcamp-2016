@@ -1,15 +1,16 @@
 package abstractFactory;
 
-import java.sql.Connection;
+public class SQLFactory extends AbstractFactory {
 
-public class SQLFactory extends ConnectionFactory {
-
-	public Connection getConnection(String connectionType) {
+	public AbstractSQL getSQL(String connectionType) {
 		if(connectionType.equalsIgnoreCase("mysql")){
-			return MySQLSingleton.getInstance().getConnection();
+			return MySQLConnection.getInstance();
 		}else if(connectionType.equalsIgnoreCase("oracle")){
-			return OracleSingleton.getInstance().getConnection();
+			return OracleConnection.getInstance();
 		}
+		return null;
+	}
+	public AbstractNoSQL getNoSQL(String connectionType) {
 		return null;
 	}
 

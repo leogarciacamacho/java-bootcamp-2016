@@ -2,30 +2,30 @@ package builder;
 
 import java.sql.*;
 
-public class MySQLSingleton {
+public class OracleConnection {
 	private static String host;
 	private static String port;
 	private static String name;
 	private static String user;
 	private static String pass;
 	private Connection connection = null;
-	private static MySQLSingleton instance = null;
+	private static OracleConnection instance = null;
 	
-	private MySQLSingleton() {
+	private OracleConnection() {
 	}
 	
-	public static MySQLSingleton getInstance() {
+	public static OracleConnection getInstance() {
 		if(instance ==null){
-			instance = new MySQLSingleton();
+			instance = new OracleConnection();
 		}
 		return instance;
 	}
 	
 	public Connection getConnection() { 
        try {
-			if(connection == null) {
-				String url = "jdbc:mysql://" + host + ":" + port + "/" + name;
-				connection = DriverManager.getConnection(url, user, pass);
+			if(connection == null || connection.isClosed()) {
+				StringBuilder url = new StringBuilder ("jdbc:oracle://" + host + ":" + port + "/" + name);
+				connection = DriverManager.getConnection(url.toString(), user, pass);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -39,7 +39,7 @@ public class MySQLSingleton {
 	}
 
 	public static void setHost(String host) {
-		MySQLSingleton.host = host;
+		OracleConnection.host = host;
 	}
 
 	public static String getPort() {
@@ -47,7 +47,7 @@ public class MySQLSingleton {
 	}
 
 	public static void setPort(String port) {
-		MySQLSingleton.port = port;
+		OracleConnection.port = port;
 	}
 
 	public static String getName() {
@@ -55,7 +55,7 @@ public class MySQLSingleton {
 	}
 
 	public static void setName(String name) {
-		MySQLSingleton.name = name;
+		OracleConnection.name = name;
 	}
 
 	public static String getUser() {
@@ -63,7 +63,7 @@ public class MySQLSingleton {
 	}
 
 	public static void setUser(String user) {
-		MySQLSingleton.user = user;
+		OracleConnection.user = user;
 	}
 
 	public static String getPass() {
@@ -71,7 +71,7 @@ public class MySQLSingleton {
 	}
 
 	public static void setPass(String pass) {
-		MySQLSingleton.pass = pass;
+		OracleConnection.pass = pass;
 	} 
-		
+			
 }
