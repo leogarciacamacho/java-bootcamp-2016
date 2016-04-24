@@ -1,21 +1,27 @@
 package com.mycompany.app.my_app;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
-public class AppTest extends TestCase{
+import org.junit.Before;
+import org.junit.Test;
+
+public class AppTest {
 	private static App app;
 	
-	public void setUp() {
+	@Before
+	public void setUpNumbers() {
 		app = new App(2,3);
 	}
 	
-	public void testMajor() {
+	@Test
+	public void ReturnsTheMajorBetweenTwoSetUpNumbers() {
 		int value = app.major();
-		assertNotSame(2, value);
+		assertNotEquals(2, value);
 		assertEquals(3, value);
     }
 	
-	public void testMinor() {
+	@Test
+	public void ReturnsTheMinorBetweenTwoSetUpNumbers() {
 		int value = app.minor();
 		assertNotNull(value);
 		assertEquals(2, value);
