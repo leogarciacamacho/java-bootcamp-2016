@@ -16,7 +16,7 @@ public class RecentFileListTest {
 	
 	@Test
 	public void whenProgramIsRunForFirstTimeThenListIsEmpty() {
-		assertEquals(0,recentFileList.getList().size());
+		assertTrue(recentFileList.isEmpty());
 	}
 	
 	@Test
@@ -27,22 +27,19 @@ public class RecentFileListTest {
 	}
 	
 	@Test
-	public void whenAnOpenedFileAlreadyExistInTheListThenItIsBumpedToTheTop() {
-		int count =0;
+	public void whenAnOpenedFileAlreadyExistInTheListThenItIsBumpedToTheTop() {	
 		for(int i = 0;i<5;i++) {
 			file = new File();
 			file.open(recentFileList);
 		}
+		
+		int listSize = recentFileList.getList().size();
+		
 		file = recentFileList.getList().get(2);
 		
 		file.open(recentFileList);
-		assertTrue(recentFileList.getList().getLast() == file);
-		for(File f : recentFileList.getList()) {
-			if (f == file) {
-				count++;
-			}
-		}
-		assertEquals(1,count);		
+		
+		assertEquals(listSize, recentFileList.getList().size());		
 	}
 	
 	@Test
