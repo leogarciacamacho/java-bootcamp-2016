@@ -1,15 +1,15 @@
-package com.mycompany.app.shoppingCart;
+package com.mycompany.app.shoppingCart.buisnessObject;
 
 public class Product {
 	private int id;
 	private String name;
-	private int stock;
+	public String description;
 	private double price;
 	
-	public Product(int id, String name, int stock, double price) {
+	public Product(int id, String name, String description, double price) {
 		this.id = id;
 		this.name = name;
-		this.stock = stock;
+		this.description = description;
 		this.price = price;
 	}
 	
@@ -28,15 +28,15 @@ public class Product {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public int getStock() {
-		return stock;
+	
+	public String getDescription() {
+		return description;
 	}
 
-	public void setStock(int stock) {
-		this.stock = stock;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-
+	
 	public double getPrice() {
 		return price;
 	}

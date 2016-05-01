@@ -1,4 +1,6 @@
-package com.mycompany.app.shoppingCart;
+package com.mycompany.app.shoppingCart.Services;
+
+import com.mycompany.app.shoppingCart.buisnessObject.User;
 
 /**
  * This interface manages the implementation of the user.
@@ -18,8 +20,9 @@ public interface UserService {
 	 * Returns a specific user, searched by the ID.
 	 * @param id the ID of the user.
 	 * @return a User object
+	 * @throws Exception 
 	 */
-	public User getUser(int id);
+	public User get(int id) throws Exception;
 	
 	/**
 	 * Updates an existing user in the Database.
