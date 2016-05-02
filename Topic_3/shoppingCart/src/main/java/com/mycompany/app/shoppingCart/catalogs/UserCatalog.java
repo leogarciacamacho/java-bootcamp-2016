@@ -1,13 +1,15 @@
 package com.mycompany.app.shoppingCart.catalogs;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.swing.JOptionPane;
 
 import com.mycompany.app.shoppingCart.buisnessObject.User;
 import com.mycompany.app.shoppingCart.generator.IdGenerator;
 
 public class UserCatalog {
-	private List<User> users = new ArrayList<User>();
+	private Set<User> users = new HashSet<User>();
 	private static UserCatalog instance = null;
 	
 	private UserCatalog() {
@@ -21,10 +23,17 @@ public class UserCatalog {
 	}
 	
 	public int add(User user) {
-		int id = IdGenerator.getInstance().getUserId();
-		user.setId(id);
-		users.add(user);
-		return user.getId();
+		
+		if(!users.contains(user)) {
+			int id = IdGenerator.getInstance().getUserId();
+			user.setId(id);
+			users.add(user);
+			return user.getId();
+		} else {
+			JOptionPane.showMessageDialog(null, "This user name already exists", "Warning", JOptionPane.WARNING_MESSAGE);
+			return 0;
+		}
+		
 	}
 	
 	public User get(int id) throws Exception {
@@ -47,11 +56,5 @@ public class UserCatalog {
 	
 	public void delete(User user) {		
 		users.remove(user);		
-	}
-	
-	
-	public List<User> getList() {
-		return users;
-	}
-	
+	}	
 }

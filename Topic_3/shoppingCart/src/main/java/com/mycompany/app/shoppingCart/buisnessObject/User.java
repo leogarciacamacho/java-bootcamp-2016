@@ -5,13 +5,11 @@ public class User {
 	private String userName;
 	private String email;
 	private String password;
-	private ShoppingCart shoppingCart;
 	
 	public User(String userName, String email, String password) {
 		this.userName= userName;
 		this.email = email;
 		this.password = password;
-		this.shoppingCart = new ShoppingCart();
 	}
 
 	public int getId() {
@@ -46,13 +44,30 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public ShoppingCart getShoppingCart() {
-		return shoppingCart;
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		return result;
 	}
 
-	public void setShoppingCart(ShoppingCart shoppingCart) {
-		this.shoppingCart = shoppingCart;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (userName == null) {
+			if (other.userName != null)
+				return false;
+		} else if (!userName.equals(other.userName))
+			return false;
+		return true;
 	}
 
 }
