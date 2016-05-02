@@ -2,97 +2,52 @@ package com.mycompany.app.shoppingCart.Services;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import com.mycompany.app.shoppingCart.buisnessObject.Product;
 import com.mycompany.app.shoppingCart.buisnessObject.ProductAmount;
-import com.mycompany.app.shoppingCart.buisnessObject.User;
-import com.mycompany.app.shoppingCart.stub.DataBaseConnectorStub;
+import com.mycompany.app.shoppingCart.buisnessObject.ShoppingCart;
+import com.mycompany.app.shoppingCart.catalogs.ProductCatalog;
+import com.mycompany.app.shoppingCart.catalogs.StockCatalog;
 
 public class ShoppingCartServiceImp implements ShoppingCartService {
-	
-	private User userLogged = null;
-	
-	public void logIn(String userName, String password) {
-		if(userLogged == null) {
-			for(User user : DataBaseConnectorStub.getInstance().getUsers()) {
-				if (user.getUserName() == userName) {
-					if(user.getPassword() == password) {
-						userLogged = user;
-						break;
-					}
-					System.out.println("Password not valid");
-					break;
-				}
-			}
-			if(userLogged == null) {
-				System.out.println("User not valid");
-			}
-		} else {
-			System.out.println("You are already logged in");
-		}
 
-		
-	}
-	
-	public void logOut() {
-		userLogged = null;
-	}
-	
-	public void addToCart(int id, int quantity) throws Exception {
-		  if(userLogged != null) {
-			  if(quantity > 0) {
-				  Product product = DataBaseConnectorStub.getInstance().getProduct(id);
-				  int actualStock = DataBaseConnectorStub.getInstance().getProductAmount(product);
-				  if (quantity <= actualStock) {
-					  DataBaseConnectorStub.getInstance().setProductAmount(product, actualStock - quantity);
-					  userLogged.getShoppingCart().add(product, quantity);				  
-				  } else {
-					  System.out.println("Not enough stock.  Actual stock: " + actualStock);
-				  }
+	public void addToCart(int id, int quantity, ShoppingCart shoppingCart) throws Exception {
+		if(quantity > 0) {
+			  Product product = ProductCatalog.getInstance().get(id);
+			  int actualStock = StockCatalog.getInstance().get(product);
+			  if (quantity <= actualStock) {
+				  StockCatalog.getInstance().set(product, actualStock - quantity);
+				  shoppingCart.add(product, quantity);				  
+			  } else {
+				  JOptionPane.showMessageDialog(null, "Not enough stock. \nActual stock: " + actualStock, "Warning", JOptionPane.WARNING_MESSAGE);
 			  }
-		  } else {
-			  System.out.println("Please, log in first");
-		  }
+		}
 	}
 
-	public void removeFromCart(int id, int quantity) throws Exception {
-		if(userLogged != null) {
-			Product product = DataBaseConnectorStub.getInstance().getProduct(id);
-			int actualStock = DataBaseConnectorStub.getInstance().getProductAmount(product);
+	public void removeFromCart(int id, int quantity, ShoppingCart shoppingCart) throws Exception {
+		if(quantity > 0) {
+			Product product = ProductCatalog.getInstance().get(id);
+			int actualStock = StockCatalog.getInstance().get(product);
 			int toRemove = quantity;
-			if(quantity > userLogged.getShoppingCart().get(product)) {
-				toRemove = userLogged.getShoppingCart().get(product);
+			if(quantity > shoppingCart.get(product)) {
+				toRemove = shoppingCart.get(product);
 			}
-			userLogged.getShoppingCart().remove(product, toRemove);
-			DataBaseConnectorStub.getInstance().setProductAmount(product, actualStock + toRemove);
-		} else {
-			System.out.println("Please, log in first");
-		}
+			shoppingCart.remove(product, toRemove);
+			StockCatalog.getInstance().set(product, actualStock + toRemove);
+		}		
 	}
 
-	public double getTotalPrice() {
-		if(userLogged != null) {
-			return userLogged.getShoppingCart().getTotalPrice();
-		} else {
-			System.out.println("Please, log in first");
-			return 0;
-		}
+	public double getTotalPrice(ShoppingCart shoppingCart) {
+		return shoppingCart.getTotalPrice();
 	}
 
-	public void clearCart() {
-		if(userLogged != null) {
-			userLogged.getShoppingCart().clear();	
-		} else {
-			System.out.println("Please, log in first");
-		}
+	public void clearCart(ShoppingCart shoppingCart) {
+		shoppingCart.clear();
 	}
 
-	public List<ProductAmount> closeCart() {
-		if(userLogged != null) {
-			return userLogged.getShoppingCart().getList();
-		} else {
-			System.out.println("Please, log in first");
-			return null;
-		}
+	public List<ProductAmount> closeCart(ShoppingCart shoppingCart) {
+		return shoppingCart.getList();
 	}
 
 	
