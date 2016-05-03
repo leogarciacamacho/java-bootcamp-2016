@@ -1,4 +1,4 @@
-package com.mycompany.app.shoppingCart.Services;
+package com.mycompany.app.shoppingCart.services;
 
 import com.mycompany.app.shoppingCart.buisnessObject.User;
 
@@ -13,8 +13,9 @@ public interface UserService {
 	/**
 	 * Adds a new user to the Database.
 	 * @param user the user that will be added
+	 * @throws Exception 
 	 */
-	public void add(User user);	
+	public void add(User user) throws Exception;	
 	
 	/**
 	 * Returns a specific user, searched by the ID.

@@ -1,11 +1,11 @@
-package com.mycompany.app.shoppingCart.Services;
+package com.mycompany.app.shoppingCart.services;
 
 import com.mycompany.app.shoppingCart.buisnessObject.User;
 import com.mycompany.app.shoppingCart.catalogs.UserCatalog;
 
 public class UserServiceImp implements UserService {
 
-	public void add(User user) {
+	public void add(User user) throws Exception {
 		UserCatalog.getInstance().add(user);
 	}
 

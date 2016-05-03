@@ -8,13 +8,13 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.mycompany.app.shoppingCart.Services.ShoppingCartService;
-import com.mycompany.app.shoppingCart.Services.ShoppingCartServiceImp;
 import com.mycompany.app.shoppingCart.buisnessObject.ProductAmount;
 import com.mycompany.app.shoppingCart.buisnessObject.ShoppingCart;
 import com.mycompany.app.shoppingCart.buisnessObject.User;
 import com.mycompany.app.shoppingCart.catalogs.UserCatalog;
 import com.mycompany.app.shoppingCart.forTesting.Init;
+import com.mycompany.app.shoppingCart.services.ShoppingCartService;
+import com.mycompany.app.shoppingCart.services.ShoppingCartServiceImp;
 
 public class ShoppingCartServiceImpTest {
 	private ShoppingCartService shoppingCartService;

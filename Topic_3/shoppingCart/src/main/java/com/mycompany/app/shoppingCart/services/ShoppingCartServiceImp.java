@@ -1,8 +1,6 @@
-package com.mycompany.app.shoppingCart.Services;
+package com.mycompany.app.shoppingCart.services;
 
 import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import com.mycompany.app.shoppingCart.buisnessObject.Product;
 import com.mycompany.app.shoppingCart.buisnessObject.ProductAmount;
@@ -20,7 +18,7 @@ public class ShoppingCartServiceImp implements ShoppingCartService {
 				  StockCatalog.getInstance().set(product, actualStock - quantity);
 				  shoppingCart.add(product, quantity);				  
 			  } else {
-				  JOptionPane.showMessageDialog(null, "Not enough stock. \nActual stock: " + actualStock, "Warning", JOptionPane.WARNING_MESSAGE);
+				  throw new Exception();
 			  }
 		}
 	}
