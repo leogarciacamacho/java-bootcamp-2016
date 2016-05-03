@@ -22,7 +22,7 @@ public class UserCatalog {
 		return instance;
 	}
 	
-	public int add(User user) {
+	public int add(User user) throws Exception {
 		
 		if(!users.contains(user)) {
 			int id = IdGenerator.getInstance().getUserId();
@@ -30,8 +30,7 @@ public class UserCatalog {
 			users.add(user);
 			return user.getId();
 		} else {
-			JOptionPane.showMessageDialog(null, "This user name already exists", "Warning", JOptionPane.WARNING_MESSAGE);
-			return 0;
+			throw new Exception();
 		}
 		
 	}
