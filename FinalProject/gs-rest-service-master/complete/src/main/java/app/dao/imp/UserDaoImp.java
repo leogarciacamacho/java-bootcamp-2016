@@ -1,6 +1,5 @@
-package dao.imp;
+package app.dao.imp;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,23 +9,23 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import bo.User;
-import connector.DbConnector;
-import dao.UserDao;
+import app.connector.DbConnector;
+import app.dao.UserDao;
+import app.domain.User;
 
 @Repository
 public class UserDaoImp implements UserDao {
 
+	@Override
 	@Transactional
-	public void addUser(User user) throws SQLException {
-		Connection conn = DbConnector.getInstance().getConnection();
+	public void addUser(User user) throws SQLException, ClassNotFoundException {
 		String userName = user.getUserName();
 		String pass = user.getPass();
 		String email = user.getEmail();
 		String query = "INSERT INTO users VALUES (?, ?, ?)";
 
 		try {
-			PreparedStatement preparedStatement = conn.prepareStatement(query);
+			PreparedStatement preparedStatement = DbConnector.getInstance().getConnection().prepareStatement(query);
 			preparedStatement.setString(1, userName);
 			preparedStatement.setString(2, pass);
 			preparedStatement.setString(3, email);
@@ -36,14 +35,14 @@ public class UserDaoImp implements UserDao {
 		}
 	}
 
+	@Override
 	@Transactional
-	public User getUser(String userName) throws SQLException {
+	public User getUser(String userName) throws SQLException, ClassNotFoundException {
 		User user = new User();
-		Connection conn = DbConnector.getInstance().getConnection();
 		String query = "SELECT * FROM users u where u.userName = ?";
 
 		try {
-			PreparedStatement preparedStatement = conn.prepareStatement(query);
+			PreparedStatement preparedStatement = DbConnector.getInstance().getConnection().prepareStatement(query);
 			preparedStatement.setString(1, userName);
 			ResultSet result = preparedStatement.executeQuery();
 
@@ -59,52 +58,48 @@ public class UserDaoImp implements UserDao {
 		return user;
 	}
 
+	@Override
 	@Transactional
-	public void updateUser(User user) throws SQLException {
-		Connection conn = DbConnector.getInstance().getConnection();
-		String userName = user.getUserName();
+	public void updateUser(String userName, User user) throws SQLException, ClassNotFoundException {
+		String newUserName = user.getUserName();
 		String pass = user.getPass();
 		String email = user.getEmail();
-		String query = "UPDATE users SET pass = ?, email = ? WHERE userName = ?";
+		String query = "UPDATE users SET userName = ?, pass = ?, email = ? WHERE userName = ?";
 
 		try {
-			PreparedStatement preparedStatement = conn.prepareStatement(query);
-			preparedStatement.setString(1, pass);
-			preparedStatement.setString(2, email);
-			preparedStatement.setString(3, userName);
-			preparedStatement.execute();
-		} catch (SQLException e) {
-			throw e;
-		}
-	}
-
-	@Transactional
-	public void deleteUser(User user) throws SQLException {
-		Connection conn = DbConnector.getInstance().getConnection();
-		String userName = user.getUserName();
-		String pass = user.getPass();
-		String email = user.getEmail();
-		String query = "DELETE FROM users WHERE userName = ? AND pass = ? AND email = ?";
-
-		try {
-			PreparedStatement preparedStatement = conn.prepareStatement(query);
-			preparedStatement.setString(1, userName);
+			PreparedStatement preparedStatement = DbConnector.getInstance().getConnection().prepareStatement(query);
+			preparedStatement.setString(1, newUserName);
 			preparedStatement.setString(2, pass);
 			preparedStatement.setString(3, email);
+			preparedStatement.setString(4, userName);
 			preparedStatement.execute();
 		} catch (SQLException e) {
 			throw e;
 		}
 	}
 
+	@Override
 	@Transactional
-	public List<User> getUsers() throws SQLException {
+	public void deleteUser(String userName) throws SQLException, ClassNotFoundException {
+		String query = "DELETE FROM users WHERE userName = ?";
+
+		try {
+			PreparedStatement preparedStatement = DbConnector.getInstance().getConnection().prepareStatement(query);
+			preparedStatement.setString(1, userName);
+			preparedStatement.execute();
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
+
+	@Override
+	@Transactional
+	public List<User> getUsers() throws SQLException, ClassNotFoundException {
 		List<User> users = new ArrayList<User>();
-		Connection conn = DbConnector.getInstance().getConnection();
 		String query = "SELECT * FROM users";
 
 		try {
-			PreparedStatement preparedStatement = conn.prepareStatement(query);
+			PreparedStatement preparedStatement = DbConnector.getInstance().getConnection().prepareStatement(query);
 			ResultSet result = preparedStatement.executeQuery();
 
 			while (result.next()) {

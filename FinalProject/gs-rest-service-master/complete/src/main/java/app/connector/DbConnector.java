@@ -1,4 +1,4 @@
-package connector;
+package app.connector;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,29 +13,29 @@ public class DbConnector {
 	private Connection connection = null;
 	private static DbConnector instance = null;
 	
-	private DbConnector() {
+	private DbConnector() throws ClassNotFoundException {
 		try {
 			Class.forName("com.mysql.jdbc.Connection");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			throw e;
 		}
 	}
 	
-	public static DbConnector getInstance() {
+	public static DbConnector getInstance() throws ClassNotFoundException {
 		if(instance ==null){
 			instance = new DbConnector();
 		}
 		return instance;
 	}
 	
-	public Connection getConnection() { 
+	public Connection getConnection() throws SQLException { 
        try {
 			if(connection == null || connection.isClosed()) {
 				String url = "jdbc:mysql://" + host + ":" + port + "/" + name;
 				connection = DriverManager.getConnection(url, user, pass);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw e;
 		}
 		return connection;
           

@@ -1,4 +1,4 @@
-package bo;
+package app.domain;
 
 public class CartItem {
 	private Product product;
