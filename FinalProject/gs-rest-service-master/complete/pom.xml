@@ -35,6 +35,13 @@
 			<version>5.1.38</version>
 		</dependency>	
 		
+		<!-- Swagger -->
+		<dependency>
+       		<groupId>com.mangofactory</groupId>
+     		  <artifactId>swagger-springmvc</artifactId>
+     		  <version>0.8.8</version>
+   		</dependency>
+		
     </dependencies>
 
 

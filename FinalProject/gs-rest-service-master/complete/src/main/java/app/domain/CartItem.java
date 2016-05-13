@@ -1,14 +1,22 @@
 package app.domain;
 
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value = "Item from cart entity", description = "The product with it's quantity")
 public class CartItem {
+
+	@ApiModelProperty(value = "The item's product")
 	private Product product;
+
+	@ApiModelProperty(value = "The quantity of the product")
 	private int quantity;
-	
+
 	public CartItem(Product product, int quantity) {
 		this.product = product;
 		this.quantity = quantity;
 	}
-	
+
 	public CartItem() {
 	}
 
