@@ -44,12 +44,8 @@ public class CartServiceImp implements CartService {
 	}
 
 	@Override
-	public Cart buyProducts(Cart cart) throws SQLException, ClassNotFoundException {
-		double totalAmount = 0;
-		for(CartItem item : cart.getItems()) {
-			totalAmount += item.getProduct().getPrice() * item.getQuantity();
-		}
-		cart.setTotalAmount(totalAmount);
+	public Cart buyProducts(Cart cart) throws SQLException, ClassNotFoundException {		
+		cart.closeCart();
 		return cart;
 	}
 
